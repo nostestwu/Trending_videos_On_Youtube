@@ -97,20 +97,20 @@ ggplot(data = top10commentchannel, aes(x = reorder(channelTitle, TotalComment), 
 ```
 
 
+PsychedSubstance has the most views, likes and most viewd video in their channel. However, Black Pigeon Speaks seems to have a higher number in comments compared to the channel PsychedSubstance. We think the reason could be the difference in their channel category where Black Pigeon Speaks is a news&politics channel whereas PsychedSubstance is a Science&technology/entertainment channel.
+
+
+
 ```{r warning = FALSE, message = FALSE}
 
 
-top10commentchannel <- summarise(youtube_data1, TotalComment = sum(commentCount)) %>%
-    arrange(desc(TotalComment)) %>%
-    head(10)
+youtube_Category <- youtube_data %>% count(videoCategoryLabel)
 
-ggplot(data = top10commentchannel, aes(x = reorder(channelTitle, TotalComment), y = TotalComment)) +
-  geom_bar(stat = "identity", fill = "blue") +
-  coord_flip() +
-  ggtitle("Top 10 Most Comment Channel") +
-  ylab("Comments") +
-  xlab("Channel")
 
+ggplot(youtube_Category, aes(x="", y=n, fill=videoCategoryLabel))+
+  geom_bar(stat="identity", width = 1, color="white")+
+  coord_polar("y", start = 0) +
+  theme_void()
 
 ```
 
