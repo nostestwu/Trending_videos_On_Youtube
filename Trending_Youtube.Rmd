@@ -6,7 +6,7 @@ output: pdf_document
 ---
 
 
-```{r include=FALSE}
+```{r warning = FALSE, message = FALSE}
 
 library(tidyverse)
 library(ggplot2)
@@ -15,14 +15,14 @@ library(utils)
 
 
 
-```{r include=FALSE}
+```{r warning = FALSE, message = FALSE}
 
 youtube_data <- read_csv("data/Trending_videos_on_youtube_dataset.csv")
 
 ```
 
 
-```{r echo=FALSE}
+```{r ewarning = FALSE, message = FALSE}
 
 top10video <- youtube_data %>% 
   arrange(desc(viewCount)) %>%
@@ -33,12 +33,16 @@ ggplot(data = top10video, aes(x = reorder(videoTitle, viewCount), y = viewCount)
   coord_flip() +
   ggtitle("Top 10 Most Viewed Videos") +
   ylab("Views") +
-  xlab("Video Title")
-
+  xlab("Video Title") + 
+  
+  # changing all labels font 
+  #theme(text = element_text(size = 8)) +
+  
+  theme(axis.text = element_text(size = 4))
 
 ```
 
-```{r echo=FALSE}
+```{r warning = FALSE, message = FALSE}
 
 youtube_data1 <- group_by(youtube_data, channelTitle)
 
@@ -57,7 +61,7 @@ ggplot(data = top10channel, aes(x = reorder(channelTitle, TotalViews), y = Total
 ```
 
 
-```{r echo=FALSE}
+```{r warning = FALSE, message = FALSE}
 
 
 top10likechannel <- summarise(youtube_data1, TotalLike = sum(likeCount)) %>%
@@ -75,7 +79,7 @@ ggplot(data = top10likechannel, aes(x = reorder(channelTitle, TotalLike), y = To
 ```
 
 
-```{r echo=FALSE}
+```{r warning = FALSE, message = FALSE}
 
 
 top10commentchannel <- summarise(youtube_data1, TotalComment = sum(commentCount)) %>%
@@ -93,7 +97,22 @@ ggplot(data = top10commentchannel, aes(x = reorder(channelTitle, TotalComment), 
 ```
 
 
+```{r warning = FALSE, message = FALSE}
 
+
+top10commentchannel <- summarise(youtube_data1, TotalComment = sum(commentCount)) %>%
+    arrange(desc(TotalComment)) %>%
+    head(10)
+
+ggplot(data = top10commentchannel, aes(x = reorder(channelTitle, TotalComment), y = TotalComment)) +
+  geom_bar(stat = "identity", fill = "blue") +
+  coord_flip() +
+  ggtitle("Top 10 Most Comment Channel") +
+  ylab("Comments") +
+  xlab("Channel")
+
+
+```
 
 
 
