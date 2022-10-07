@@ -3,6 +3,7 @@ title: "Trending_Videos_On_Youtube"
 author: "Bill_Wu"
 date: "03/10/2022"
 output: pdf_document
+bibliography: citations.bib
 ---
 
 
@@ -110,9 +111,58 @@ youtube_Category <- youtube_data %>% count(videoCategoryLabel)
 ggplot(youtube_Category, aes(x="", y=n, fill=videoCategoryLabel))+
   geom_bar(stat="identity", width = 1, color="white")+
   coord_polar("y", start = 0) +
-  theme_void()
+  theme_void() +
+  ggtitle("All Posted Videos in Different Categories")
 
 ```
+
+
+```{r warning = FALSE, message = FALSE}
+
+
+youtube_top10Category <- top10video %>% count(videoCategoryLabel)
+
+
+ggplot(youtube_top10Category, aes(x="", y=n, fill=videoCategoryLabel))+
+  geom_bar(stat="identity", width = 1, color="white")+
+  coord_polar("y", start = 0) +
+  theme_void() +
+  ggtitle("Top 10 Most Viwed Videos in Different Categories")
+
+```
+
+
+Even though most videos are about People&Blogs or science&technology, only a small proportion got into the top 10 most viewed videos.
+
+Q1: how does the duration of the video influences the views of the video?
+
+
+```{r warning = FALSE, message = FALSE}
+
+
+graph1 <- ggplot(youtube_data, aes(x = durationSec, y = viewCount )) +
+  geom_point() + 
+  ggtitle("Video length vs Views") + 
+  xlab("Duration in Second") +
+  ylab("Views")
+
+graph1
+
+
+```
+
+As we can see from the chart, most viewed videos lie in between 400 seconds to 800 seconds. This is approximately 7 minutes to 13 minutes. According to narakeet, the average Youtube video length in 2022 is 11.7 minutes.[@YoutubeLength]
+
+
+
+
+
+# References
+
+
+
+
+
 
 
 
